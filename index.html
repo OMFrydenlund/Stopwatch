@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take. Your. Time.</title>
+</head>
+
+<body>
+    <div class="stopWatch">
+        <div id="mainTimer" class="mainScreen">0</div><br>
+        <button class="stopWatchButton" onclick="startTimer()">⏵</button>
+        <button class="stopWatchButton" onclick="recordTimeRightNow()">⏺</button>
+        <button class="stopWatchButton" onclick="pauseTimer()">⏸</button>
+        <button class="stopWatchButton" onclick="stopTimer()">⏹</button> <br>
+        <ul id="lapTimer" class="lapScreen"></ul>
+    </div>
+    <script>
+        const mainTimer = document.getElementById('mainTimer');
+        const lapTimer = document.getElementById('lapTimer');
+        let seconds = 0; // base value set to 0 on the timer
+        let timer;
+
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(countBySeconds, 1000);
+        }
+
+        function countBySeconds() {
+            mainTimer.innerHTML = seconds;
+            seconds++;
+        }
+
+        function recordTimeRightNow() {
+            addRecordedTimeToList(seconds - 1); //-1 is cause human reaction time lmao
+        }
+
+        function addRecordedTimeToList(recordedTime) {
+            const list = document.createElement('li');
+            list.textContent = recordedTime;
+            lapTimer.appendChild(list); // attaches a new element to a previous one, chronologically
+        }
+
+        function pauseTimer() {
+            clearInterval(timer);
+        }
+
+        function stopTimer() {
+            clearInterval(timer);
+            mainTimer.innerHTML = 0;
+            seconds = 0;
+            lapTimer.innerHTML = '';
+        }
+    </script>
+</body>
+
+</html>
